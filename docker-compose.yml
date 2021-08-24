@@ -8,7 +8,7 @@ services:
         working_dir: /src
         volumes:
             - type: bind
-              source: ./
+              source: ./client
               target: /src
         command: bash -c "npm i -g http-server && http-server"
     server:
@@ -19,7 +19,7 @@ services:
         working_dir: /src
         volumes:
             - type: bind
-              source: ./
+              source: ./server
               target: /src
         environment:
             - PGUSER=futureproof
