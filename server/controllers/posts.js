@@ -17,4 +17,16 @@ const checkIfPostExists = async (req, res, next) => {
     next();
 };
 
-module.exports = { checkIfPostExists };
+const checkIncomingFields = (req, res, next) => {
+    const { title, text } = req.body;
+
+    if (!title || !text) {
+        return res.status(400).json({
+            message: 'Missing title and/or text fields'
+        });
+    }
+
+    next();
+};
+
+module.exports = { checkIfPostExists, checkIncomingFields };
