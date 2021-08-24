@@ -35,6 +35,21 @@ class Post {
             }
         });
     }
+
+    static create(title, text, pseudonym = 'anonymous') {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let postData = await db.query(
+                    `INSERT INTO posts (title, text, pseudonym) VALUES ($1, $2, $3) RETURNING *;`,
+                    [title, text, pseudonym]
+                );
+                let newPost = new Post(postData.rows[0]);
+                resolve(newPost);
+            } catch (err) {
+                reject('Error creating new post');
+            }
+        });
+    }
 }
 
 module.exports = Post;
