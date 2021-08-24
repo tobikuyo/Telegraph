@@ -21,12 +21,12 @@ class Post {
         });
     }
 
-    static findByDateAndId(date, id) {
+    static findById(id) {
         return new Promise(async (resolve, rejecy) => {
             try {
                 let postData = await db.query(
-                    `SELECT title, date, pseudonym, text FROM posts WHERE date = $1 AND id = $2;`,
-                    [date, id]
+                    `SELECT title, date, pseudonym, text FROM posts WHERE id = $1;`,
+                    [id]
                 );
                 let post = new Post(postData.row[0]);
                 resolve(post);
