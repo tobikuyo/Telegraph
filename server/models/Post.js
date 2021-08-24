@@ -22,7 +22,7 @@ class Post {
     }
 
     static findById(id) {
-        return new Promise(async (resolve, rejecy) => {
+        return new Promise(async (resolve, reject) => {
             try {
                 let postData = await db.query(
                     `SELECT title, date, pseudonym, text FROM posts WHERE id = $1;`,
@@ -36,3 +36,5 @@ class Post {
         });
     }
 }
+
+module.exports = Post;
