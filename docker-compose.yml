@@ -1,0 +1,44 @@
+version: '3'
+services:
+    client:
+        container_name: client
+        image: node:12
+        ports:
+            - 8080:8080
+        working_dir: /src
+        volumes:
+            - type: bind
+              source: ./client
+              target: /src
+        command: bash -c "npm i -g http-server && http-server"
+    server:
+        container_name: server
+        image: node:12
+        ports:
+            - 5000:5000
+        working_dir: /src
+        volumes:
+            - type: bind
+              source: ./server
+              target: /src
+        environment:
+            - PGUSER=futureproof
+            - PGHOST=database
+            - PGDATABASE=telegraph
+            - PGPASSWORD=pass
+            - PGPORT=5432
+        depends_on:
+            - database
+        command: bash -c "npm install && npm run server"
+    database:
+        container_name: database
+        image: postgres:13.4
+        environment:
+            - POSTGRES_DB=telegraph
+            - POSTGRES_USER=futureproof
+            - POSTGRES_PASSWORD=pass
+        volumes:
+            - './database/:/docker-entrypoint-initdb.d/:ro'
+            - 'data:/var/lib/postgresql/data'
+volumes:
+    data:
