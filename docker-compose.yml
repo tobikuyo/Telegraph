@@ -8,7 +8,7 @@ services:
         working_dir: /src
         volumes:
             - type: bind
-              source: ./
+              source: ./client
               target: /src
         command: bash -c "npm i -g http-server && http-server"
     server:
@@ -19,11 +19,11 @@ services:
         working_dir: /src
         volumes:
             - type: bind
-              source: ./
+              source: ./server
               target: /src
         environment:
             - PGUSER=futureproof
-            - PGHOST=db
+            - PGHOST=database
             - PGDATABASE=telegraph
             - PGPASSWORD=pass
             - PGPORT=5432
@@ -32,7 +32,7 @@ services:
         command: bash -c "npm install && npm run server"
     database:
         container_name: database
-        image: postgres:12.4
+        image: postgres:13.4
         environment:
             - POSTGRES_DB=telegraph
             - POSTGRES_USER=futureproof
