@@ -10,7 +10,7 @@ services:
             - type: bind
               source: ./client
               target: /src
-        command: bash -c "npm install && npm run bundle && http-server"
+        command: bash -c "npm i -g http-server && http-server"
     server:
         container_name: server
         image: node:12
