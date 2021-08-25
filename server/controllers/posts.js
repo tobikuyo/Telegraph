@@ -4,19 +4,18 @@ const Post = require('../models/Post');
  * Checks that a post is in the database and adds it to the request.
  */
 const checkIfPostExists = async (req, res, next) => {
-    const { id } = req.params;
-    const post = await Post.findById(id);
-
-    if (!post) {
-        return res.status(404).json({
-            message: `There is no post with the id '${id}'`
-        });
+    try {
+        const post = await Post.findById(req.params.id);
+        req.post = post;
+        next();
+    } catch (error) {
+        next(error);
     }
-
-    req.post = post;
-    next();
 };
 
+/**
+ * Checks that a request body has a title and a text property, since they are required
+ */
 const checkIncomingFields = (req, res, next) => {
     const { title, text } = req.body;
 
