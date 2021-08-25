@@ -39,7 +39,7 @@ textarea {
 .form {
     display: flex;
     flex-direction: column;
-    flex: 0.35;
+    flex: 0.45;
 }
 
 .form__title {
