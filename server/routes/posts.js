@@ -17,7 +17,7 @@ router.get('/:id', checkIfPostExists, async (req, res) => {
         const post = req.post;
         res.status(200).json({ data: post });
     } catch (error) {
-        res.status(500).json({ error });
+        res.status(404).json({ error });
     }
 });
 
@@ -26,7 +26,6 @@ router.post('/', checkIncomingFields, async (req, res) => {
         const { title, text, pseudonym } = req.body;
         const post = await Post.create(title, text, pseudonym);
         res.status(201).json({ data: post });
-        res.redirect(`/${post.id}`);
     } catch (error) {
         res.status(500).json({ error });
     }
